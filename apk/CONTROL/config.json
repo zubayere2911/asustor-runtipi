@@ -1,0 +1,66 @@
+{
+    "general": {
+        "package": "io.runtipi",
+        "name": "Runtipi",
+        "version": "4.6.5",
+        "depends": [
+            "docker-ce(>=28.1.1)",
+            "jq(>=1.7.1)",
+            "git(>=2.45.2)"
+        ],
+        "developer": "Runtipi Team",
+        "maintainer": "JigSawFr",
+        "email": "jiigsaaw@pm.me",
+        "website": "https://runtipi.io",
+        "architecture": "x86-64",
+        "firmware": "5.1.0",
+        "default-lang": "en-US",
+        "memory-limit": 4096,
+        "memory-advice": 8192,
+        "privacy-statement": "https://runtipi.io/docs/reference/privacy-policy",
+        "description": "Homeserver management made easy. Install and manage your apps with just one click.",
+        "force-php": false,
+        "force-webserver": false
+    },
+    "adm-desktop": {
+        "app": {
+            "type": "custom",
+            "http_port": 8880,
+            "https_port": 4443,
+            "url": "/"
+        },
+        "privilege": {
+            "accessible": "administrators",
+            "customizable": true
+        }
+    },
+    "register": {
+        "symbolic-link": {
+            "bin": [
+                "runtipi-cli"
+            ]
+        },
+        "share-folder": [
+            {
+                "name": "Docker",
+                "description": "Default shared folder for Docker apps"
+            },
+            {
+                "name": "Media",
+                "description": "Default shared folder for Media files"
+            }
+        ],
+        "prerequisites": {
+            "enable-service": [],
+            "restart-service": []
+        },
+        "boot-priority": {
+            "start-order": 95,
+            "stop-order": 5
+        },
+        "port": [
+            8880,
+            4443
+        ]
+    }
+}

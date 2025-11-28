@@ -1,0 +1,103 @@
+name: Build APK Packages
+
+on:
+  workflow_call:
+    inputs:
+      version:
+        description: 'Version to build'
+        required: false
+        type: string
+    outputs:
+      version:
+        description: 'Built version'
+        value: ${{ jobs.build.outputs.version }}
+
+jobs:
+  build:
+    name: Build Packages
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+    
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Get version
+        id: version
+        run: |
+          if [ -n "${{ inputs.version }}" ]; then
+            VERSION="${{ inputs.version }}"
+          else
+            VERSION=$(python3 -c "import json; print(json.load(open('apk/CONTROL/config.json'))['general']['version'])")
+          fi
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "📦 Version: $VERSION"
+
+      - name: Update config.json version
+        if: inputs.version != ''
+        run: |
+          python3 << EOF
+          import json
+          with open('apk/CONTROL/config.json', 'r') as f:
+              config = json.load(f)
+          config['general']['version'] = '${{ steps.version.outputs.version }}'
+          with open('apk/CONTROL/config.json', 'w') as f:
+              json.dump(config, f, indent=4)
+          EOF
+
+      - name: Update Docker images
+        run: |
+          echo "🐳 Updating Docker image versions..."
+          python3 build/docker-images.py --update --version "${{ steps.version.outputs.version }}" || true
+          python3 build/docker-images.py --show
+
+      - name: Build x86-64 APK
+        run: python3 build/build.py
+
+      - name: Build ARM64 APK
+        run: python3 build/build-arm64.py
+
+      - name: Generate checksums
+        run: |
+          cd apk/bin
+          sha256sum *.apk > checksums.sha256
+          cat checksums.sha256
+
+      - name: Validate packages
+        run: |
+          for apk in apk/bin/*.apk; do
+            echo "🔍 Validating $(basename $apk)..."
+            TEMP=$(mktemp -d)
+            unzip -q "$apk" -d "$TEMP"
+            for file in apkg-version control.tar.gz data.tar.gz; do
+              [ -f "$TEMP/$file" ] || { echo "❌ Missing $file"; exit 1; }
+            done
+            rm -rf "$TEMP"
+            echo "✅ Valid"
+          done
+
+      - name: Upload x86-64 APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: io.runtipi_${{ steps.version.outputs.version }}_x86-64
+          path: apk/bin/io.runtipi_*_x86-64.apk
+          retention-days: 30
+
+      - name: Upload ARM64 APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: io.runtipi_${{ steps.version.outputs.version }}_arm64
+          path: apk/bin/io.runtipi_*_arm64.apk
+          retention-days: 30
+
+      - name: Upload checksums
+        uses: actions/upload-artifact@v4
+        with:
+          name: checksums
+          path: apk/bin/checksums.sha256
+          retention-days: 30

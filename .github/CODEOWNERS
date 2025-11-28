@@ -1,0 +1,14 @@
+# Code owners - automatically requested for PR reviews
+# https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+# Default owner for everything
+* @JigSawFr
+
+# Build system
+/build/ @JigSawFr
+
+# Package scripts
+/apk/CONTROL/ @JigSawFr
+
+# CI/CD workflows
+/.github/workflows/ @JigSawFr

@@ -1,0 +1,46 @@
+{
+  "en": {
+    "name": "Runtipi",
+    "description": "Runtipi is a self-hosted dashboard and app platform for your NAS.\n\n- Web UI: https://<NAS_IP>:4443\n- Data: /share/Docker/RunTipi\n- HTTP port: 8880\n- HTTPS port: 4443\n\nManage, install, and run apps easily on your Asustor device."
+  },
+  "fr": {
+    "name": "Runtipi",
+    "description": "Runtipi est un tableau de bord et une plateforme d'applications auto-hébergée pour votre NAS.\n\n- Interface web : https://<IP_NAS>:4443\n- Données : /share/Docker/RunTipi\n- Port HTTP : 8880\n- Port HTTPS : 4443\n\nGérez, installez et exécutez facilement des applications sur votre appareil Asustor."
+  },
+  "de": {
+    "name": "Runtipi",
+    "description": "Runtipi ist ein selbstgehostetes Dashboard und eine App-Plattform für Ihr NAS.\n\n- Web-Oberfläche: https://<NAS_IP>:4443\n- Daten: /share/Docker/RunTipi\n- HTTP-Port: 8880\n- HTTPS-Port: 4443\n\nVerwalten, installieren und starten Sie Apps einfach auf Ihrem Asustor-Gerät."
+  },
+  "it": {
+    "name": "Runtipi",
+    "description": "Runtipi è una dashboard e una piattaforma di app self-hosted per il tuo NAS.\n\n- Interfaccia web: https://<NAS_IP>:4443\n- Dati: /share/Docker/RunTipi\n- Porta HTTP: 8880\n- Porta HTTPS: 4443\n\nGestisci, installa ed esegui facilmente le app sul tuo dispositivo Asustor."
+  },
+  "es": {
+    "name": "Runtipi",
+    "description": "Runtipi es un panel de control e plataforma de aplicaciones autohospedada para tu NAS.\n\n- Interfaz web: https://<NAS_IP>:4443\n- Datos: /share/Docker/RunTipi\n- Puerto HTTP: 8880\n- Puerto HTTPS: 4443\n\nAdministra, instala y ejecuta aplicaciones fácilmente en tu dispositivo Asustor."
+  },
+  "nl": {
+    "name": "Runtipi",
+    "description": "Runtipi is een zelfgehost dashboard en app-platform voor uw NAS.\n\n- Webinterface: https://<NAS_IP>:4443\n- Data: /share/Docker/RunTipi\n- HTTP-poort: 8880\n- HTTPS-poort: 4443\n\nBeheer, installeer en start eenvoudig apps op uw Asustor-apparaat."
+  },
+  "ru": {
+    "name": "Runtipi",
+    "description": "Runtipi — это панель управления и платформа приложений с самостоятельным размещением для вашего NAS.\n\n- Веб-интерфейс: https://<NAS_IP>:4443\n- Данные: /share/Docker/RunTipi\n- HTTP-порт: 8880\n- HTTPS-порт: 4443\n\nУправляйте, устанавливайте и запускайте приложения на вашем устройстве Asustor легко." 
+  },
+  "ja": {
+    "name": "Runtipi",
+    "description": "Runtipiは、NAS用のセルフホスト型ダッシュボードおよびアプリプラットフォームです。\n\n- Web UI: https://<NAS_IP>:4443\n- データ: /share/Docker/RunTipi\n- HTTPポート: 8880\n- HTTPSポート: 4443\n\nAsustorデバイスでアプリを簡単に管理、インストール、実行できます。"
+  },
+  "zh-CN": {
+    "name": "Runtipi",
+    "description": "Runtipi 是适用于您的 NAS 的自托管仪表板和应用平台。\n\n- 网页界面：https://<NAS_IP>:4443\n- 数据：/share/Docker/RunTipi\n- HTTP 端口：8880\n- HTTPS 端口：4443\n\n在您的 Asustor 设备上轻松管理、安装和运行应用程序。"
+  },
+  "zh-TW": {
+    "name": "Runtipi",
+    "description": "Runtipi 是適用於您的 NAS 的自我託管儀表板和應用平台。\n\n- 網頁介面：https://<NAS_IP>:4443\n- 資料：/share/Docker/RunTipi\n- HTTP 埠：8880\n- HTTPS 埠：4443\n\n在您的 Asustor 裝置上輕鬆管理、安裝和執行應用程式。"
+  },
+  "ko": {
+    "name": "Runtipi",
+    "description": "Runtipi는 NAS를 위한 셀프호스팅 대시보드 및 앱 플랫폼입니다.\n\n- 웹 UI: https://<NAS_IP>:4443\n- 데이터: /share/Docker/RunTipi\n- HTTP 포트: 8880\n- HTTPS 포트: 4443\n\nAsustor 기기에서 앱을 쉽게 관리, 설치 및 실행하세요."
+  }
+}

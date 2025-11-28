@@ -1,0 +1,9 @@
+{
+  "version": "4.6.5",
+  "images": {
+    "traefik": "traefik:v3.6.1",
+    "postgres": "postgres:14",
+    "rabbitmq": "rabbitmq:4-alpine",
+    "runtipi": "ghcr.io/runtipi/runtipi:v4.6.5"
+  }
+}
