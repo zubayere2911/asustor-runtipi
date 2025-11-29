@@ -24,7 +24,6 @@ Sources:
     - Fallback: Runtipi release notes
 """
 
-import os
 import sys
 import argparse
 import json

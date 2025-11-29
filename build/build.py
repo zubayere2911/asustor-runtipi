@@ -12,7 +12,6 @@ Requirements:
     - No external dependencies (uses only standard library)
 """
 
-import os
 import sys
 import argparse
 import zipfile
@@ -478,7 +477,8 @@ class ApkBuilder:
                     width = struct.unpack('>I', header[16:20])[0]
                     height = struct.unpack('>I', header[20:24])[0]
                     return width, height
-        except Exception:
+        except (OSError, struct.error):
+            # File unreadable or invalid PNG header
             pass
         return None, None
     

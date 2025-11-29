@@ -23,7 +23,6 @@ Usage:
     python version-manager.py --set 4.6.5       # Set base version (check for revision)
 """
 
-import os
 import sys
 import argparse
 import json
@@ -121,7 +120,7 @@ class VersionManager:
             )
             if result.returncode == 0:
                 tags = [t.strip() for t in result.stdout.strip().split('\n') if t.strip()]
-                return sorted(tags, key=lambda x: self._version_sort_key(x), reverse=True)
+                return sorted(tags, key=self._version_sort_key, reverse=True)
         except Exception as e:
             print_warn(f"Could not get git tags: {e}")
         return []
