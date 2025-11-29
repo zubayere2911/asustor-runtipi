@@ -57,20 +57,20 @@ jobs:
           python3 build/docker-images.py --show
 
       - name: Build x86-64 APK
-        run: python3 build/build.py
+        run: python3 build/build.py --destination ./releases
 
       - name: Build ARM64 APK
-        run: python3 build/build-arm64.py
+        run: python3 build/build-arm64.py --destination ./releases
 
       - name: Generate checksums
         run: |
-          cd apk/bin
+          cd releases
           sha256sum *.apk > checksums.sha256
           cat checksums.sha256
 
       - name: Validate packages
         run: |
-          for apk in apk/bin/*.apk; do
+          for apk in releases/*.apk; do
             echo "🔍 Validating $(basename $apk)..."
             TEMP=$(mktemp -d)
             unzip -q "$apk" -d "$TEMP"
@@ -85,19 +85,19 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: io.runtipi_${{ steps.version.outputs.version }}_x86-64
-          path: apk/bin/io.runtipi_*_x86-64.apk
+          path: releases/io.runtipi_*_x86-64.apk
           retention-days: 30
 
       - name: Upload ARM64 APK
         uses: actions/upload-artifact@v4
         with:
           name: io.runtipi_${{ steps.version.outputs.version }}_arm64
-          path: apk/bin/io.runtipi_*_arm64.apk
+          path: releases/io.runtipi_*_arm64.apk
           retention-days: 30
 
       - name: Upload checksums
         uses: actions/upload-artifact@v4
         with:
           name: checksums
-          path: apk/bin/checksums.sha256
+          path: releases/checksums.sha256
           retention-days: 30
