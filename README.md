@@ -112,13 +112,53 @@ https://github.com/JigSawFr/tipi-store
 | Requirement | Minimum Version |
 |-------------|-----------------|
 | ASUSTOR ADM | 5.1.0+ |
-| Docker CE | 28.1.1+ |
+| Docker CE | 28.0.0+ |
 | jq | 1.7.1+ |
 | Git | 2.45.2+ |
 | RAM | 4GB (8GB recommended) |
 
 > [!NOTE]
 > Install Docker CE, jq, and Git via **App Central** before installing Runtipi.
+
+---
+
+## 🖥️ Compatible ASUSTOR Models
+
+Runtipi requires **Docker 28.0.0+** and **4GB RAM minimum**. Here's the compatibility overview:
+
+### ✅ Fully Compatible
+
+| Series | Models | CPU | RAM | Notes |
+|--------|--------|-----|-----|-------|
+| **Flashstor** | FS6706T, FS6712X | Intel N5105/5095 | 4-8GB | ⭐ Excellent performance |
+| **Lockerstor Gen2** | AS6704T, AS6706T | Intel N5105 | 4-8GB | ⭐ Recommended |
+| **Lockerstor Gen1** | AS6602T, AS6604T | Intel J4125 | 4-8GB | ✅ Full support |
+| **Lockerstor Pro** | AS7112RDX, AS7116RDX | Intel Xeon | 8GB+ | ✅ Enterprise-ready |
+| **Nimbustor** | AS5402T, AS5404T | Intel N5105 | 4GB | ✅ Full support |
+| **Nimbustor** | AS5202T, AS5304T | Intel J4005/J4105 | 2-4GB | ⚠️ 4GB upgrade recommended |
+
+### ⚠️ Limited Compatibility
+
+| Series | Models | CPU | RAM | Issue |
+|--------|--------|-----|-----|-------|
+| **Drivestor Pro** | AS3302T, AS3304T | Realtek RTD1296 | 2GB | ⚠️ ARM64 - Limited RAM |
+| **Drivestor 4 Pro** | AS3304T v2 | Realtek RTD1619B | 2GB | ⚠️ ARM64 - Limited RAM |
+
+### ❌ Not Compatible
+
+| Series | Models | Reason |
+|--------|--------|--------|
+| **Drivestor** | AS1102T, AS1104T | 1GB RAM - Below minimum |
+| **Older models** | AS-2xx, AS-3xx | No ADM 5.x / Docker 28+ support |
+
+### Key Compatibility Factors
+
+1. **RAM is the main blocker** - Runtipi needs 4GB minimum, 8GB recommended
+2. **Docker 28.0.0+** - Required by Runtipi 4.x (available on ADM 5.1+)
+3. **x86-64 vs ARM64** - Both architectures supported, x86-64 recommended for best app compatibility
+
+> [!TIP]
+> If your NAS has 2GB RAM, consider upgrading to 4GB+ for the best experience. Many ASUSTOR models support RAM upgrades.
 
 ---
 

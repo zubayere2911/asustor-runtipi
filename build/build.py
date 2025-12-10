@@ -22,8 +22,6 @@ import json
 import re
 import hashlib
 import struct
-import urllib.request
-import urllib.error
 from datetime import datetime
 from pathlib import Path
 
@@ -39,11 +37,9 @@ CHANGELOG_MD = PROJECT_ROOT / 'CHANGELOG.md'  # Main changelog (GitHub visible)
 CHANGELOG_TXT = PROJECT_ROOT / 'apk' / 'CONTROL' / 'changelog.txt'  # APK copy
 LICENSE_SRC = PROJECT_ROOT / 'LICENSE'  # Main license (GitHub visible)
 LICENSE_TXT = PROJECT_ROOT / 'apk' / 'CONTROL' / 'license.txt'  # APK copy
-PACKAGE_NOTES_FILE = SCRIPT_DIR / 'package-notes.md'
 
 # Configuration
 MAX_DEV_BUILDS = 5  # Keep only the last N dev builds
-GITHUB_REPO = 'runtipi/runtipi'  # For fetching release notes
 
 
 class Colors:
@@ -87,226 +83,26 @@ def print_error(msg):
 
 
 # ============================================================================
-# CHANGELOG GENERATION
+# CHANGELOG & LICENSE
 # ============================================================================
 
-def fetch_github_release_notes(version: str) -> str:
-    """Fetch release notes from GitHub for a specific version."""
-    url = f"https://api.github.com/repos/{GITHUB_REPO}/releases/tags/v{version}"
-    
-    try:
-        req = urllib.request.Request(url, headers={
-            'Accept': 'application/vnd.github.v3+json',
-            'User-Agent': 'ASUSTOR-APK-Builder'
-        })
-        with urllib.request.urlopen(req, timeout=10) as response:
-            data = json.loads(response.read().decode('utf-8'))
-            return data.get('body', '')
-    except urllib.error.HTTPError as e:
-        if e.code == 404:
-            print_warn(f"No GitHub release found for v{version}")
-        else:
-            print_warn(f"GitHub API error: {e.code}")
-        return ''
-    except Exception as e:
-        print_warn(f"Could not fetch release notes: {e}")
-        return ''
-
-
-def parse_github_release_notes(body: str) -> dict:
-    """Parse GitHub release notes into sections."""
-    sections = {
-        'added': [],
-        'fixed': [],
-        'improved': [],
-        'updated': [],
-        'other': []
-    }
-    
-    if not body:
-        return sections
-    
-    current_section = 'other'
-    
-    for line in body.split('\n'):
-        line = line.strip()
-        
-        # Detect section headers
-        lower_line = line.lower()
-        if '## added' in lower_line or '### added' in lower_line or '**added**' in lower_line:
-            current_section = 'added'
-            continue
-        elif '## fixed' in lower_line or '### fixed' in lower_line or '**fixed**' in lower_line:
-            current_section = 'fixed'
-            continue
-        elif '## improved' in lower_line or '### improved' in lower_line or '**improved**' in lower_line:
-            current_section = 'improved'
-            continue
-        elif '## updated' in lower_line or '### updated' in lower_line or '**updated**' in lower_line:
-            current_section = 'updated'
-            continue
-        elif line.startswith('## ') or line.startswith('### '):
-            current_section = 'other'
-            continue
-        
-        # Extract bullet points
-        if line.startswith('- ') or line.startswith('* '):
-            item = line[2:].strip()
-            if item:
-                sections[current_section].append(item)
-    
-    return sections
-
-
-def load_package_notes() -> dict:
-    """Load package-specific notes from package-notes.md."""
-    notes = {
-        'current': [],
-        'history': {}  # version -> list of notes
-    }
-    
-    if not PACKAGE_NOTES_FILE.exists():
-        return notes
-    
-    try:
-        content = PACKAGE_NOTES_FILE.read_text(encoding='utf-8')
-        current_version = None
-        
-        for line in content.split('\n'):
-            line = line.strip()
-            
-            # Version header: ## [4.6.5] or ## Current
-            if line.startswith('## '):
-                header = line[3:].strip()
-                if header.lower() == 'current':
-                    current_version = 'current'
-                else:
-                    # Extract version from [4.6.5] format
-                    match = re.search(r'\[?([\d.]+)\]?', header)
-                    if match:
-                        current_version = match.group(1)
-                        notes['history'][current_version] = []
-                continue
-            
-            # Bullet points
-            if line.startswith('- ') or line.startswith('* '):
-                item = line[2:].strip()
-                if item:
-                    if current_version == 'current':
-                        notes['current'].append(item)
-                    elif current_version and current_version in notes['history']:
-                        notes['history'][current_version].append(item)
-        
-    except Exception as e:
-        print_warn(f"Could not load package notes: {e}")
-    
-    return notes
-
-
-def generate_changelog(version: str, package_version: str = None, is_dev: bool = False) -> str:
-    """Generate changelog.txt content.
-    
-    Args:
-        version: Base Runtipi version (e.g., "4.6.5")
-        package_version: Full package version (e.g., "4.6.5.r1" or "4.6.5.dev3")
-        is_dev: Whether this is a dev build
-    """
-    today = datetime.now().strftime('%Y-%m-%d')
-    lines = []
-    
-    lines.append("# Changelog - Runtipi for ASUSTOR")
-    lines.append("")
-    lines.append("This changelog is auto-generated during build.")
-    lines.append("")
-    
-    # Current version section
-    display_version = package_version or version
-    lines.append(f"## [{display_version}] - {today}")
-    lines.append("")
-    
-    # Package-specific notes for current version
-    pkg_notes = load_package_notes()
-    
-    # Fetch and parse GitHub release notes (Runtipi first)
-    github_notes = fetch_github_release_notes(version)
-    sections = parse_github_release_notes(github_notes)
-    
-    if any(sections.values()):
-        lines.append(f"### Runtipi v{version}")
-        
-        if sections['added']:
-            for item in sections['added']:
-                lines.append(f"- Added: {item}")
-        
-        if sections['improved']:
-            for item in sections['improved']:
-                lines.append(f"- Improved: {item}")
-        
-        if sections['fixed']:
-            for item in sections['fixed']:
-                lines.append(f"- Fixed: {item}")
-        
-        if sections['updated']:
-            for item in sections['updated']:
-                lines.append(f"- Updated: {item}")
-        
-        if sections['other']:
-            for item in sections['other'][:5]:  # Limit other items
-                lines.append(f"- {item}")
-        
-        lines.append("")
-    else:
-        lines.append(f"### Runtipi v{version}")
-        lines.append(f"- Core: Runtipi v{version} release")
-        lines.append("")
-    
-    # ASUSTOR package-specific notes (after Runtipi notes)
-    if pkg_notes['current']:
-        lines.append("### ASUSTOR Package")
-        for note in pkg_notes['current']:
-            lines.append(f"- {note}")
-        lines.append("")
-    
-    # Historical package notes
-    if pkg_notes['history']:
-        lines.append("---")
-        lines.append("")
-        lines.append("## Previous Versions")
-        lines.append("")
-        
-        for hist_version, hist_notes in sorted(pkg_notes['history'].items(), reverse=True):
-            if hist_notes:
-                lines.append(f"### [{hist_version}]")
-                for note in hist_notes:
-                    lines.append(f"- {note}")
-                lines.append("")
-    
-    # Footer
-    lines.append("---")
-    lines.append("")
-    lines.append("For full Runtipi changelog, see [GitHub Releases](https://github.com/runtipi/runtipi/releases).")
-    lines.append("")
-    
-    return '\n'.join(lines)
-
-
 def update_changelog(version: str, package_version: str = None, is_dev: bool = False):
-    """Update CHANGELOG.md and copy to changelog.txt. Skip for dev builds."""
-    if is_dev:
-        print_info("Skipping changelog (dev build)")
+    """Copy CHANGELOG.md to apk/CONTROL/changelog.txt for APK package.
+    
+    CHANGELOG.md is manually maintained. This function simply copies it
+    to the APK package during build.
+    """
+    print_info("Copying changelog to APK...")
+    
+    if not CHANGELOG_MD.exists():
+        print_warn("CHANGELOG.md not found, skipping")
         return
     
-    print_info("Generating changelog...")
-    
-    content = generate_changelog(version, package_version, is_dev)
-    
-    # Write main CHANGELOG.md with Unix line endings
-    CHANGELOG_MD.write_text(content, encoding='utf-8', newline='\n')
-    
-    # Copy to APK changelog.txt
+    # Read main CHANGELOG.md and copy to APK changelog.txt
+    content = CHANGELOG_MD.read_text(encoding='utf-8')
     CHANGELOG_TXT.write_text(content, encoding='utf-8', newline='\n')
     
-    print_success("Changelog updated")
+    print_success("Changelog copied to APK")
 
 
 def copy_license():

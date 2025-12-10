@@ -243,6 +243,35 @@ set_env_var "RUNTIPI_USER_CONFIG_PATH" "$RUNTIPI_PATH"
 log_success "📄 .env configured"
 
 # ============================================================================
+# 📝 CREATE DEFAULT tipi-compose.yml
+# ============================================================================
+# This file customizes Docker Compose to mount Traefik from the persistent path
+USER_CONFIG_DIR="$RUNTIPI_PATH/user-config"
+TIPI_COMPOSE_FILE="$USER_CONFIG_DIR/tipi-compose.yml"
+
+if [ ! -f "$TIPI_COMPOSE_FILE" ]; then
+    log_info "Creating default tipi-compose.yml..."
+    mkdir -p "$USER_CONFIG_DIR"
+    cat > "$TIPI_COMPOSE_FILE" << 'EOF'
+# Custom Docker Compose overrides for ASUSTOR
+# This file mounts Traefik config from the persistent RunTipi path
+services:
+  runtipi-reverse-proxy:
+    volumes:
+      - ${RUNTIPI_TRAEFIK_PATH:-.}/traefik:/etc/traefik
+      - ${RUNTIPI_TRAEFIK_PATH:-.}/traefik/shared:/shared
+      - /etc/localtime:/etc/localtime:ro
+
+  runtipi-db:
+    volumes:
+      - ${RUNTIPI_STATE_PATH:-.}/data/postgres:/var/lib/postgresql/data
+EOF
+    log_success "tipi-compose.yml created"
+else
+    log_info "tipi-compose.yml already exists, keeping existing configuration"
+fi
+
+# ============================================================================
 # 💾 SAVE VERSION
 # ============================================================================
 echo "" >> "$RUNTIPI_LOG"

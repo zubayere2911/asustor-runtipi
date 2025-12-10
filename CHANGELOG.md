@@ -1,8 +1,41 @@
 # 📋 Changelog
 
 > All notable changes to Runtipi for ASUSTOR are documented here.
-> 
-> This changelog is **auto-generated** during build from GitHub releases and package notes.
+
+---
+
+## [4.6.5.r1] - 2025-12-10
+
+> 📦 **Package revision** - Runtipi version unchanged (v4.6.5)
+
+### 📦 ASUSTOR Package
+
+#### ✨ Added
+
+| Feature | Description |
+|---------|-------------|
+| 🖥️ Compatible Models | Added compatibility table for ASUSTOR NAS models in README |
+| 📝 tipi-compose.yml | Auto-created during install for correct Traefik volume mounts |
+| 🔄 Sync tipi-compose.yml | User config file now synced between AppCentral and RunTipi paths |
+
+#### 🔧 Changed
+
+| Area | Description |
+|------|-------------|
+| 🐳 Docker | Minimum version lowered to **28.0.0** (was 28.1.1) |
+| 🔨 Build System | Changelog now manually maintained (no longer auto-generated) |
+
+#### 🐛 Fixed
+
+| Issue | Description |
+|-------|-------------|
+| 🔧 Traefik Volumes | Fixed Traefik config path mounting via tipi-compose.yml |
+
+#### ⚠️ Known Issues
+
+| Issue | Workaround |
+|-------|------------|
+| `memory-advice` | Temporarily removed from config.json due to ASUSTOR App Central bug (#91706) |
 
 ---
 
@@ -59,13 +92,5 @@ This is the **first public release** on GitHub!
 
 ## 📚 More Information
 
-| Resource | Link |
-|----------|------|
-| 🚀 Full Runtipi Changelog | [GitHub Releases](https://github.com/runtipi/runtipi/releases) |
-| 📦 Download Packages | [Releases](https://github.com/JigSawFr/asustor-runtipi/releases) |
-| 🐛 Report Issues | [GitHub Issues](https://github.com/JigSawFr/asustor-runtipi/issues) |
-| 💬 Community | [Discord #asustor](https://discord.gg/xPtEFWEcjT) |
-
----
-
-*Last updated: November 2025*
+- [Runtipi Releases](https://github.com/runtipi/runtipi/releases)
+- [ASUSTOR Package Releases](https://github.com/JigSawFr/asustor-runtipi/releases)

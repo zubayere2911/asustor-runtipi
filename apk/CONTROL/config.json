@@ -2,9 +2,9 @@
     "general": {
         "package": "io.runtipi",
         "name": "Runtipi",
-        "version": "4.6.5",
+        "version": "4.6.5.r1",
         "depends": [
-            "docker-ce(>=28.1.1)",
+            "docker-ce(>=28.0.0)",
             "jq(>=1.7.1)",
             "git(>=2.45.2)"
         ],
@@ -16,7 +16,6 @@
         "firmware": "5.1.0",
         "default-lang": "en-US",
         "memory-limit": 4096,
-        "memory-advice": 8192,
         "privacy-statement": "https://runtipi.io/docs/reference/privacy-policy",
         "description": "Homeserver management made easy. Install and manage your apps with just one click.",
         "force-php": false,

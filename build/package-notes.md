@@ -3,7 +3,15 @@
 Package-specific notes used to generate the changelog.
 These notes are combined with Runtipi GitHub release notes.
 
-## Current
+## 4.6.5.r1 (2025-12-10)
+
+- Added: Compatible ASUSTOR models table in README
+- Added: Auto-created tipi-compose.yml for correct Traefik volume mounts
+- Changed: Docker minimum version lowered to 28.0.0 (was 28.1.1)
+- Fixed: Traefik config path mounting via tipi-compose.yml
+- Known Issue: memory-advice temporarily removed from config.json (ASUSTOR bug #91706)
+
+## 4.6.5 (2025-11-28)
 
 - Initial public release on GitHub
 - Added: Automatic pre-upgrade backup before package updates
